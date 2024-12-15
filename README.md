@@ -24,6 +24,8 @@ Copy config file and set JsonWebToken secret key
 
 The example codebase uses [MikroORM](https://mikro-orm.io/) with a MySQL database.
 
+You can use `docker compose up -d` to start up MySQL with the default settings.
+
 Copy MikroORM config example file for database settings and adjust the connection settings.
 
     cp src/mikro-orm.config.ts.example src/mikro-orm.config.ts
