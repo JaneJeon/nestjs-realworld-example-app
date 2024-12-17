@@ -1,4 +1,9 @@
-import { MiddlewareConsumer, Module, NestModule, OnModuleInit } from '@nestjs/common';
+import {
+  MiddlewareConsumer,
+  Module,
+  NestModule,
+  OnModuleInit,
+} from '@nestjs/common';
 import { MikroORM } from '@mikro-orm/mysql';
 import { MikroOrmMiddleware, MikroOrmModule } from '@mikro-orm/nestjs';
 
@@ -7,22 +12,23 @@ import { ArticleModule } from './article/article.module';
 import { ProfileModule } from './profile/profile.module';
 import { TagModule } from './tag/tag.module';
 import { UserModule } from './user/user.module';
+import { ExchangeModule } from './exchange/exchange.module';
+import { ApiModule } from './api/api.module';
 
 @Module({
-  controllers: [
-    AppController,
-  ],
+  controllers: [AppController],
   imports: [
     MikroOrmModule.forRoot(),
     ArticleModule,
     UserModule,
     ProfileModule,
     TagModule,
+    ExchangeModule,
+    ApiModule,
   ],
   providers: [],
 })
 export class AppModule implements NestModule, OnModuleInit {
-
   constructor(private readonly orm: MikroORM) {}
 
   async onModuleInit(): Promise<void> {
@@ -33,9 +39,6 @@ export class AppModule implements NestModule, OnModuleInit {
   // so they would fail to access contextual EM. by registering the middleware directly in AppModule, we can get
   // around this issue
   configure(consumer: MiddlewareConsumer) {
-    consumer
-      .apply(MikroOrmMiddleware)
-      .forRoutes('*');
+    consumer.apply(MikroOrmMiddleware).forRoutes('*');
   }
-
 }

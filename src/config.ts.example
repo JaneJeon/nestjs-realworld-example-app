@@ -1,1 +1,2 @@
 export const SECRET = 'secret-key';
+export const API_KEY = 'key';
