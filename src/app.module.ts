@@ -14,6 +14,7 @@ import { TagModule } from './tag/tag.module';
 import { UserModule } from './user/user.module';
 import { ExchangeModule } from './exchange/exchange.module';
 import { ApiModule } from './api/api.module';
+import { CoinModule } from './coin/coin.module';
 
 @Module({
   controllers: [AppController],
@@ -25,6 +26,7 @@ import { ApiModule } from './api/api.module';
     TagModule,
     ExchangeModule,
     ApiModule,
+    CoinModule,
   ],
   providers: [],
 })
