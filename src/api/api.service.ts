@@ -2,7 +2,11 @@ import { HttpService } from '@nestjs/axios';
 import { HttpException, HttpStatus, Injectable, Logger } from '@nestjs/common';
 import { firstValueFrom, catchError } from 'rxjs';
 import { AxiosRequestConfig, AxiosError } from 'axios';
-import { IGetExchangeRequest, IPingResponse } from './api.interface';
+import {
+  IGetCoinResponse,
+  IGetExchangeResponse,
+  IPingResponse,
+} from './api.interface';
 
 @Injectable()
 export class ApiService {
@@ -42,7 +46,11 @@ export class ApiService {
     return this.makeRequest('GET', '/ping');
   }
 
-  getExchange(id: string): Promise<IGetExchangeRequest> {
+  getExchange(id: string): Promise<IGetExchangeResponse> {
     return this.makeRequest('GET', `/exchanges/${id}`);
+  }
+
+  getCoin(id: string): Promise<IGetCoinResponse> {
+    return this.makeRequest('GET', `/coins/${id}`);
   }
 }

@@ -4,10 +4,15 @@ import { CoinController } from './coin.controller';
 import { MikroOrmModule } from '@mikro-orm/nestjs';
 import { Coin } from './coin.entity';
 import { UserModule } from '../user/user.module';
+import { ApiModule } from '../api/api.module';
 
 @Module({
   providers: [CoinService],
   controllers: [CoinController],
-  imports: [MikroOrmModule.forFeature({ entities: [Coin] }), UserModule],
+  imports: [
+    MikroOrmModule.forFeature({ entities: [Coin] }),
+    UserModule,
+    ApiModule,
+  ],
 })
 export class CoinModule {}
