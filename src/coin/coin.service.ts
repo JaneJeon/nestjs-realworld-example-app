@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { CreateCoinDto } from './coin.dto';
 import { ICoinRO, ICoinsRO } from './coin.interface';
 import { InjectRepository } from '@mikro-orm/nestjs';
@@ -16,6 +16,11 @@ export class CoinService {
   ) {}
 
   async create({ id }: CreateCoinDto): Promise<ICoinRO> {
+    // Check if there's any existing first, to prevent unnecessary API calls
+    const existing = await this.coinRepository.findOne(id);
+    if (existing !== null)
+      throw new HttpException('Coin already exists!', HttpStatus.CONFLICT);
+
     const { name, symbol } = await this.apiService.getCoin(id);
 
     const coin = new Coin(id, name, symbol);
