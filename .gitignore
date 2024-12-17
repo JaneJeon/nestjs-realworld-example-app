@@ -20,6 +20,7 @@ node_modules
 #config files
 src/mikro-orm.config.ts
 src/config.ts
+src/redis.config.ts
 
 # code testing coverage
 coverage

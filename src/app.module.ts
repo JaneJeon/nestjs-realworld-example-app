@@ -6,6 +6,9 @@ import {
 } from '@nestjs/common';
 import { MikroORM } from '@mikro-orm/mysql';
 import { MikroOrmMiddleware, MikroOrmModule } from '@mikro-orm/nestjs';
+import { BullModule } from '@nestjs/bullmq';
+
+import { redisConfig } from './redis.config';
 
 import { AppController } from './app.controller';
 import { ArticleModule } from './article/article.module';
@@ -20,6 +23,7 @@ import { CoinModule } from './coin/coin.module';
   controllers: [AppController],
   imports: [
     MikroOrmModule.forRoot(),
+    BullModule.forRoot(redisConfig),
     ArticleModule,
     UserModule,
     ProfileModule,

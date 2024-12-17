@@ -1,0 +1,8 @@
+import { BullRootModuleOptions } from '@nestjs/bullmq';
+
+export const redisConfig: BullRootModuleOptions = {
+  connection: {
+    host: 'localhost',
+    port: 6379,
+  },
+};
