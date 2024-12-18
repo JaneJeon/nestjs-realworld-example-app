@@ -14,5 +14,6 @@ import { ApiModule } from '../api/api.module';
     UserModule,
     ApiModule,
   ],
+  exports: [CoinService],
 })
 export class CoinModule {}
