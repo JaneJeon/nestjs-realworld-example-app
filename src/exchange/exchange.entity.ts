@@ -1,15 +1,20 @@
-import { Entity, PrimaryKey, Property } from '@mikro-orm/mysql';
+import {
+  Collection,
+  Entity,
+  OneToMany,
+  PrimaryKey,
+  Property,
+} from '@mikro-orm/mysql';
+import { Quote } from '../quote/quote.entity';
 
 @Entity()
 export class Exchange {
-  constructor(id: string, name: string) {
-    this.id = id;
-    this.name = name;
-  }
-
   @PrimaryKey()
   id!: string;
 
   @Property()
   name!: string;
+
+  @OneToMany(() => Quote, (quote) => quote.exchange, { lazy: true })
+  quotes = new Collection<Quote>(this);
 }

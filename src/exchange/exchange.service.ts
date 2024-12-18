@@ -24,10 +24,14 @@ export class ExchangeService {
     // Make the API call to fetch exchange details
     const { name } = await this.apiService.getExchange(id);
 
-    const exchange = new Exchange(id, name);
+    const exchange = new Exchange();
+    exchange.id = id;
+    exchange.name = name;
+
     await this.entityManager.persistAndFlush(exchange);
 
-    return { exchange };
+    // If I return `exchange` object directly, the ORM will try to access `quotes`!
+    return { exchange: { id, name } };
   }
 
   async findAll(): Promise<IExchangesRO> {

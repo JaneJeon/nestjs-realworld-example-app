@@ -23,7 +23,11 @@ export class CoinService {
 
     const { name, symbol } = await this.apiService.getCoin(id);
 
-    const coin = new Coin(id, name, symbol);
+    const coin = new Coin();
+    coin.id = id;
+    coin.name = name;
+    coin.ticker = symbol.toUpperCase();
+
     await this.entityManager.persistAndFlush(coin);
 
     return { coin };
@@ -32,5 +36,10 @@ export class CoinService {
   async findAll(): Promise<ICoinsRO> {
     const coins = await this.coinRepository.findAll();
     return { coins };
+  }
+
+  async getCoinIds(): Promise<string[]> {
+    const { coins } = await this.findAll();
+    return coins.map((coin) => coin.id);
   }
 }

@@ -1,4 +1,11 @@
-import { Entity, PrimaryKey, Property } from '@mikro-orm/mysql';
+import {
+  Collection,
+  Entity,
+  OneToMany,
+  PrimaryKey,
+  Property,
+} from '@mikro-orm/mysql';
+import { Quote } from '../quote/quote.entity';
 
 @Entity()
 export class Coin {
@@ -11,9 +18,6 @@ export class Coin {
   @Property()
   ticker!: string;
 
-  constructor(id: string, name: string, ticker: string) {
-    this.id = id;
-    this.name = name;
-    this.ticker = ticker.toUpperCase();
-  }
+  @OneToMany(() => Quote, (quote) => quote.baseCoin)
+  quotes = new Collection<Quote>(this);
 }
