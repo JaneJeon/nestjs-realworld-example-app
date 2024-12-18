@@ -93,6 +93,182 @@
     },
     {
       "columns": {
+        "job_id": {
+          "name": "job_id",
+          "type": "varchar(255)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "length": 255,
+          "mappedType": "string"
+        },
+        "exchange_id": {
+          "name": "exchange_id",
+          "type": "varchar(255)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "length": 255,
+          "mappedType": "string"
+        },
+        "base_coin_id": {
+          "name": "base_coin_id",
+          "type": "varchar(255)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "length": 255,
+          "mappedType": "string"
+        },
+        "pair_coin_id": {
+          "name": "pair_coin_id",
+          "type": "varchar(255)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "length": 255,
+          "mappedType": "string"
+        },
+        "bid_in_dollars": {
+          "name": "bid_in_dollars",
+          "type": "int",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "length": null,
+          "mappedType": "integer"
+        },
+        "ask_in_dollars": {
+          "name": "ask_in_dollars",
+          "type": "int",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "length": null,
+          "mappedType": "integer"
+        },
+        "cost_to_move2percent_up_in_dollars": {
+          "name": "cost_to_move2percent_up_in_dollars",
+          "type": "int",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "length": null,
+          "mappedType": "integer"
+        },
+        "cost_to_move2percent_down_in_dollars": {
+          "name": "cost_to_move2percent_down_in_dollars",
+          "type": "int",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "length": null,
+          "mappedType": "integer"
+        },
+        "volume_in_dollars": {
+          "name": "volume_in_dollars",
+          "type": "int",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "length": null,
+          "mappedType": "integer"
+        },
+        "fetched_at": {
+          "name": "fetched_at",
+          "type": "datetime",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "length": null,
+          "mappedType": "datetime"
+        },
+        "effective_at": {
+          "name": "effective_at",
+          "type": "datetime",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "length": null,
+          "mappedType": "datetime"
+        }
+      },
+      "name": "quote",
+      "indexes": [
+        {
+          "columnNames": [
+            "exchange_id"
+          ],
+          "composite": false,
+          "keyName": "quote_exchange_id_index",
+          "constraint": false,
+          "primary": false,
+          "unique": false
+        },
+        {
+          "columnNames": [
+            "base_coin_id"
+          ],
+          "composite": false,
+          "keyName": "quote_base_coin_id_index",
+          "constraint": false,
+          "primary": false,
+          "unique": false
+        },
+        {
+          "keyName": "PRIMARY",
+          "columnNames": [
+            "job_id",
+            "exchange_id"
+          ],
+          "composite": true,
+          "constraint": true,
+          "primary": true,
+          "unique": true
+        }
+      ],
+      "checks": [],
+      "foreignKeys": {
+        "quote_exchange_id_foreign": {
+          "constraintName": "quote_exchange_id_foreign",
+          "columnNames": [
+            "exchange_id"
+          ],
+          "localTableName": "quote",
+          "referencedColumnNames": [
+            "id"
+          ],
+          "referencedTableName": "exchange",
+          "updateRule": "cascade"
+        },
+        "quote_base_coin_id_foreign": {
+          "constraintName": "quote_base_coin_id_foreign",
+          "columnNames": [
+            "base_coin_id"
+          ],
+          "localTableName": "quote",
+          "referencedColumnNames": [
+            "id"
+          ],
+          "referencedTableName": "coin",
+          "updateRule": "cascade"
+        }
+      },
+      "nativeEnums": {}
+    },
+    {
+      "columns": {
         "id": {
           "name": "id",
           "type": "int",
