@@ -18,6 +18,8 @@ import { UserModule } from './user/user.module';
 import { ExchangeModule } from './exchange/exchange.module';
 import { ApiModule } from './api/api.module';
 import { CoinModule } from './coin/coin.module';
+import { QuoteModule } from './quote/quote.module';
+import { QuoteJobProducer } from './quote/quote.job.producer';
 
 @Module({
   controllers: [AppController],
@@ -31,14 +33,19 @@ import { CoinModule } from './coin/coin.module';
     ExchangeModule,
     ApiModule,
     CoinModule,
+    QuoteModule,
   ],
   providers: [],
 })
 export class AppModule implements NestModule, OnModuleInit {
-  constructor(private readonly orm: MikroORM) {}
+  constructor(
+    private readonly orm: MikroORM,
+    private readonly quoteJobProducer: QuoteJobProducer,
+  ) {}
 
   async onModuleInit(): Promise<void> {
     await this.orm.getMigrator().up();
+    await this.quoteJobProducer.setupCronjob();
   }
 
   // for some reason the auth middlewares in profile and article modules are fired before the request context one,
