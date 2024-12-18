@@ -5,6 +5,7 @@ import { AxiosRequestConfig, AxiosError } from 'axios';
 import {
   IGetCoinResponse,
   IGetExchangeResponse,
+  IGetExchangeTickersResponse,
   IPingResponse,
 } from './api.interface';
 
@@ -14,18 +15,18 @@ export class ApiService {
 
   constructor(private readonly httpService: HttpService) {}
 
-  private async makeRequest<ResponseType, DataType = unknown>(
+  private async makeRequest<ResponseType>(
     method: string,
     url: string,
-    data?: DataType,
+    config: Partial<AxiosRequestConfig> = {},
   ) {
-    const config: AxiosRequestConfig<DataType> = {
+    const requestConfig: AxiosRequestConfig = {
+      ...config,
       method,
       url,
-      data,
     };
 
-    const request = this.httpService.request<ResponseType>(config);
+    const request = this.httpService.request<ResponseType>(requestConfig);
 
     const response = await firstValueFrom(
       request.pipe(
@@ -43,14 +44,32 @@ export class ApiService {
   }
 
   ping(): Promise<IPingResponse> {
-    return this.makeRequest('GET', '/ping');
+    return this.makeRequest<IPingResponse>('GET', '/ping');
   }
 
   getExchange(id: string): Promise<IGetExchangeResponse> {
-    return this.makeRequest('GET', `/exchanges/${id}`);
+    return this.makeRequest<IGetExchangeResponse>('GET', `/exchanges/${id}`);
   }
 
   getCoin(id: string): Promise<IGetCoinResponse> {
-    return this.makeRequest('GET', `/coins/${id}`);
+    return this.makeRequest<IGetCoinResponse>('GET', `/coins/${id}`);
+  }
+
+  getExchangeTickers(
+    exchangeId: string,
+    coinIds: string[],
+  ): Promise<IGetExchangeTickersResponse> {
+    const config: Partial<AxiosRequestConfig> = {
+      params: {
+        depth: true,
+        coin_ids: coinIds.join(','),
+      },
+    };
+
+    return this.makeRequest<IGetExchangeTickersResponse>(
+      'GET',
+      `/exchanges/${exchangeId}/tickers`,
+      config,
+    );
   }
 }
