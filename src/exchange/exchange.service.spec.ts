@@ -22,28 +22,28 @@ describe('ExchangeService', () => {
         ExchangeService,
         {
           provide: EntityManager,
-          useFactory: jest.fn(() => ({
+          useValue: {
             persistAndFlush: jest.fn(),
-          })),
+          },
         },
         {
           provide: getRepositoryToken(Exchange),
-          useFactory: jest.fn(() => ({
+          useValue: {
             findAll: jest.fn().mockReturnValue(EXCHANGES),
             findOne: jest.fn(async (id) => {
               if (id === 'binance') return {};
               return null;
             }),
-          })),
+          },
         },
         {
           provide: ApiService,
-          useFactory: jest.fn(() => ({
+          useValue: {
             getExchange: (id: string) => {
               if (id !== 'gdax') throw new Error('Unknown exchange!');
               return { name: 'Coinbase' };
             },
-          })),
+          },
         },
       ],
     }).compile();

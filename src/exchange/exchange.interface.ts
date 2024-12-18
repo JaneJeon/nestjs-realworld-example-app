@@ -1,9 +1,11 @@
 import { Exchange } from './exchange.entity';
 
+type IExchange = Omit<Exchange, 'quotes'>;
+
 export interface IExchangeRO {
-  exchange: Exchange;
+  exchange: IExchange;
 }
 
 export interface IExchangesRO {
-  exchanges: Exchange[];
+  exchanges: IExchange[];
 }
